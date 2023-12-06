@@ -9,6 +9,7 @@ Getters and Setters are used to set and get values of the contacts in the Addres
 Address Book consist of Contact details :First Name,Last Name,Address,City,State,Zip,Phone Numberand Email
  UC_1 : Ability to create a Contacts in Address Book
  UC_2 : Add contacts into Address Book
+ UC_3 : Edit contact in the Address Book
  */
 public class AddressBook {
     private List<Contacts> data;
@@ -20,6 +21,38 @@ public class AddressBook {
     }
     public void addContact(Contacts contact) {
         data.add(contact);
+    }
+    public void editContact(String firstName, String lastName) {
+        for (Contacts contact : data) {
+            if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
+                Scanner scanner = new Scanner(System.in);
+
+                System.out.println("Editing Contact: " + firstName + " " + lastName);
+                System.out.print("Enter New Address: ");
+                String newAddress = scanner.nextLine();
+                System.out.print("Enter New City: ");
+                String newCity = scanner.nextLine();
+                System.out.print("Enter New State: ");
+                String newState = scanner.nextLine();
+                System.out.print("Enter New Zip: ");
+                String newZip = scanner.nextLine();
+                System.out.print("Enter New Phone Number: ");
+                String newPhoneNumber = scanner.nextLine();
+                System.out.print("Enter New Email: ");
+                String newEmail = scanner.nextLine();
+
+                contact.setAddress(newAddress);
+                contact.setCity(newCity);
+                contact.setState(newState);
+                contact.setZip(newZip);
+                contact.setPhoneNumber(newPhoneNumber);
+                contact.setEmail(newEmail);
+
+                System.out.println("Contact edited successfully!");
+                return;
+            }
+        }
+        System.out.println("Contact not found with the given name.");
     }
     public void viewContacts() {
         for (Contacts contact : data) {
@@ -35,6 +68,7 @@ public class AddressBook {
     }
 
     public static void main(String[] args) {
+
         display();
 
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +100,13 @@ public class AddressBook {
             Contacts newContact = new Contacts(firstName, lastName, address, city, state, zip, phoneNumber, email);
             A.addContact(newContact);
         }
+
+        System.out.print("Enter First Name of the contact to edit: ");
+        String editFirstName = scanner.nextLine();
+        System.out.print("Enter Last Name of the contact to edit: ");
+        String editLastName = scanner.nextLine();
+        A.editContact(editFirstName, editLastName);
+
         A.viewContacts();
     }
 }
