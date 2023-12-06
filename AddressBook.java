@@ -10,6 +10,7 @@ Address Book consist of Contact details :First Name,Last Name,Address,City,State
  UC_1 : Ability to create a Contacts in Address Book
  UC_2 : Add contacts into Address Book
  UC_3 : Edit contact in the Address Book
+ UC_4 : Delete contact in the Address Book
  */
 public class AddressBook {
     private List<Contacts> data;
@@ -22,6 +23,7 @@ public class AddressBook {
     public void addContact(Contacts contact) {
         data.add(contact);
     }
+    // edit the contact according  to first and last name given
     public void editContact(String firstName, String lastName) {
         for (Contacts contact : data) {
             if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
@@ -54,6 +56,23 @@ public class AddressBook {
         }
         System.out.println("Contact not found with the given name.");
     }
+    //Delete the contact according to the first and last name given
+    public void deleteContact(String firstName, String lastName) {
+        Contacts contactToRemove = null;
+        for (Contacts contact : data) {
+            if (contact.getFirstName().equalsIgnoreCase(firstName) && contact.getLastName().equalsIgnoreCase(lastName)) {
+                contactToRemove = contact;
+                break;
+            }
+        }
+
+        if (contactToRemove != null) {
+            data.remove(contactToRemove);
+            System.out.println("Contact deleted successfully!");
+        } else {
+            System.out.println("Contact not found with the given name.");
+        }
+    }
     public void viewContacts() {
         for (Contacts contact : data) {
             System.out.println("First Name: " + contact.getFirstName());
@@ -66,7 +85,6 @@ public class AddressBook {
             System.out.println("Email: " + contact.getEmail());
         }
     }
-
     public static void main(String[] args) {
 
         display();
@@ -106,6 +124,12 @@ public class AddressBook {
         System.out.print("Enter Last Name of the contact to edit: ");
         String editLastName = scanner.nextLine();
         A.editContact(editFirstName, editLastName);
+
+        System.out.print("Enter First Name of the contact to delete: ");
+        String deleteFirstName = scanner.nextLine();
+        System.out.print("Enter Last Name of the contact to delete: ");
+        String deleteLastName = scanner.nextLine();
+        A.deleteContact(deleteFirstName, deleteLastName);
 
         A.viewContacts();
     }
